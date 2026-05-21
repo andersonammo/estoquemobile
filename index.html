@@ -4,14 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lançamento de Estoque Fiscal</title>
-<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="%23F26D21"/>
-  <path d="M14 18h36v8H14z" fill="%23fff" opacity=".95"/>
-  <path d="M18 28h28v20H18z" fill="%23fff"/>
-  <path d="M23 36l6 6 13-15" fill="none" stroke="%23F26D21" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M14 18l6-7h24l6 7z" fill="%23ffb174"/>
-</svg>'>
+
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="12" fill="%23F26D21"/>
+    <path d="M14 18h36v8H14z" fill="%23fff" opacity=".95"/>
+    <path d="M18 28h28v20H18z" fill="%23fff"/>
+    <path d="M23 36l6 6 13-15" fill="none" stroke="%23F26D21" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14 18l6-7h24l6 7z" fill="%23ffb174"/>
+  </svg>'>
+
   <style>
     :root {
       --primary: #F26D21;
@@ -22,240 +24,553 @@
       --text: #333333;
     }
 
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text); margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+    }
 
-    /* ================= TELA DE LOGIN ================= */
-    #telaLogin { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #2c3e50; }
-    .login-box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; max-width: 350px; text-align: center; }
-    .login-box h2 { margin-top: 0; color: var(--primary); margin-bottom: 20px; }
-    .login-box input { width: 90%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
-    .login-box button { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-    .login-box button:hover { background-color: var(--primary-hover); }
-    #msgLogin { color: #dc3545; font-size: 13px; margin-top: 10px; min-height: 15px; }
+    #telaLogin {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #2c3e50;
+    }
 
-    /* ================= TELA DO SISTEMA ================= */
-    #telaSistema { display: none; padding: 20px; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    .header-title { background-color: var(--primary); color: white; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-    .header-title h2 { margin: 0; font-size: 22px; }
-    .user-info { font-size: 14px; background: rgba(0,0,0,0.2); padding: 5px 15px; border-radius: 20px; }
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+    }
 
-    .card { background: var(--card-bg); padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid var(--border); }
-    .card h3 { margin-top: 0; border-bottom: 2px solid var(--bg-color); padding-bottom: 10px; font-size: 16px; margin-bottom: 15px; }
+    .login-box h2 {
+      margin-top: 0;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
 
-    .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-    .form-group { display: flex; flex-direction: column; }
-    label { font-weight: 600; margin-bottom: 5px; font-size: 13px; color: #555; }
-    input, select { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-    input:focus, select:focus { border-color: var(--primary); outline: none; }
-    
-    .auto-filled { background-color: #f8f9fa; color: #495057; font-weight: 500; }
+    .login-box input {
+      width: 90%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
 
-    .btn { padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; display: inline-block; }
-    .btn-add { background-color: #28a745; color: white; margin-top: 22px; }
-    .btn-add:hover { background-color: #218838; }
-    .btn-remove { background-color: #dc3545; color: white; padding: 6px 12px; font-size: 12px; }
-    .action-group { display: flex; gap: 15px; margin-top: 15px; }
-    .btn-save { background-color: var(--primary); color: white; flex: 2; font-size: 16px; padding: 15px; }
-    .btn-print { background-color: #6c757d; color: white; flex: 1; font-size: 16px; padding: 15px; }
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { border: 1px solid var(--border); padding: 10px; text-align: left; }
-    th { background-color: #f8f9fa; color: #333; font-weight: 600; }
-    .text-right { text-align: right; }
-    .text-center { text-align: center; }
-    .empty-message { text-align: center; padding: 20px; color: #777; font-style: italic; }
-    .totals { display: flex; justify-content: flex-end; gap: 20px; margin-top: 15px; font-size: 16px; }
-    .totals span { font-weight: bold; color: var(--primary); }
+    .login-box button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    #msgLogin {
+      color: #dc3545;
+      font-size: 13px;
+      margin-top: 10px;
+      min-height: 15px;
+    }
+
+    #telaSistema {
+      display: none;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-title {
+      background-color: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .user-info {
+      font-size: 14px;
+      background: rgba(0,0,0,0.2);
+      padding: 5px 15px;
+      border-radius: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      border-bottom: 2px solid var(--bg-color);
+      padding-bottom: 10px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .grid-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .auto-filled {
+      background-color: #f8f9fa;
+      color: #495057;
+      font-weight: 500;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      display: inline-block;
+    }
+
+    .btn-add {
+      background-color: #28a745;
+      color: white;
+      margin-top: 22px;
+    }
+
+    .btn-add:hover {
+      background-color: #218838;
+    }
+
+    .btn-remove {
+      background-color: #dc3545;
+      color: white;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .action-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .btn-save {
+      background-color: var(--primary);
+      color: white;
+      flex: 2;
+      font-size: 16px;
+      padding: 15px;
+    }
+
+    .btn-print {
+      background-color: #6c757d;
+      color: white;
+      flex: 1;
+      font-size: 16px;
+      padding: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-style: italic;
+    }
+
+    .totals {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    .totals span {
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .sugestoes-produtos {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      z-index: 50;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-top: 4px;
+      max-height: 240px;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .sugestao-produto {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .sugestao-produto:hover {
+      background: #fff3e8;
+    }
+
+    .sugestao-produto strong {
+      display: block;
+      color: #333;
+    }
+
+    .sugestao-produto span {
+      display: block;
+      color: #777;
+      font-size: 12px;
+      margin-top: 2px;
+    }
 
     @media print {
-      body { background-color: white; padding: 0; }
-      #telaLogin { display: none !important; }
-      #telaSistema { padding: 0; }
-      .container { max-width: 100%; }
-      .header-title { background: white; color: black; box-shadow: none; border-bottom: 2px solid #333; padding: 10px 0; border-radius: 0; }
-      .card { border: none; box-shadow: none; padding: 0; margin-bottom: 10px; }
-      #card-adicionar, .action-group, .btn-remove, .user-info { display: none !important; }
-      .col-acao { display: none !important; }
-      input, select { border: none; background: transparent; padding: 0; font-weight: bold; color: black; appearance: none; -webkit-appearance: none; }
-      input::placeholder { color: transparent; }
-      th { background-color: #eee; }
-      .totals span { color: black; }
+      body {
+        background-color: white;
+        padding: 0;
+      }
+
+      #telaLogin {
+        display: none !important;
+      }
+
+      #telaSistema {
+        padding: 0;
+      }
+
+      .container {
+        max-width: 100%;
+      }
+
+      .header-title {
+        background: white;
+        color: black;
+        box-shadow: none;
+        border-bottom: 2px solid #333;
+        padding: 10px 0;
+        border-radius: 0;
+      }
+
+      .card {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 10px;
+      }
+
+      #card-adicionar,
+      .action-group,
+      .btn-remove,
+      .user-info {
+        display: none !important;
+      }
+
+      .col-acao {
+        display: none !important;
+      }
+
+      input,
+      select {
+        border: none;
+        background: transparent;
+        padding: 0;
+        font-weight: bold;
+        color: black;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      input::placeholder {
+        color: transparent;
+      }
+
+      th {
+        background-color: #eee;
+      }
+
+      .totals span {
+        color: black;
+      }
     }
-/* ================= VERSÃO MOBILE ================= */
-@media screen and (max-width: 768px) {
-  body {
-    background: #f4f6f9;
-    overflow-x: hidden;
-  }
 
-  #telaSistema {
-    padding: 10px;
-  }
+    @media screen and (max-width: 768px) {
+      body {
+        background: #f4f6f9;
+        overflow-x: hidden;
+      }
 
-  .container {
-    max-width: 100%;
-    margin: 0;
-  }
+      #telaSistema {
+        padding: 10px;
+      }
 
-  .header-title {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 14px;
-    border-radius: 6px;
-  }
+      .container {
+        max-width: 100%;
+        margin: 0;
+      }
 
-  .header-title h2 {
-    font-size: 18px;
-    line-height: 1.25;
-  }
+      .header-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 14px;
+        border-radius: 6px;
+      }
 
-  .user-info {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
+      .header-title h2 {
+        font-size: 18px;
+        line-height: 1.25;
+      }
 
-  .card {
-    padding: 14px;
-    margin-bottom: 14px;
-    border-radius: 6px;
-  }
+      .user-info {
+        font-size: 12px;
+        padding: 5px 10px;
+      }
 
-  .card h3 {
-    font-size: 15px;
-    margin-bottom: 12px;
-  }
+      .card {
+        padding: 14px;
+        margin-bottom: 14px;
+        border-radius: 6px;
+      }
 
-  .grid-form,
-  #card-adicionar .grid-form,
-  #card-adicionar .grid-form[style] {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
+      .card h3 {
+        font-size: 15px;
+        margin-bottom: 12px;
+      }
 
-  .form-group {
-    width: 100%;
-  }
+      .grid-form,
+      #card-adicionar .grid-form,
+      #card-adicionar .grid-form[style] {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
 
-  label {
-    font-size: 12px;
-  }
+      .form-group {
+        width: 100%;
+      }
 
-  input,
-  select {
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 42px;
-    font-size: 15px;
-  }
+      label {
+        font-size: 12px;
+      }
 
-  .btn {
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 46px;
-    text-align: center;
-  }
+      input,
+      select {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 42px;
+        font-size: 15px;
+      }
 
-  .btn-add {
-    margin-top: 0;
-  }
+      .btn {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 46px;
+        text-align: center;
+      }
 
-  .action-group {
-    flex-direction: column;
-    gap: 10px;
-  }
+      .btn-add {
+        margin-top: 0;
+      }
 
-  .btn-save,
-  .btn-print {
-    width: 100%;
-    flex: none;
-  }
+      .action-group {
+        flex-direction: column;
+        gap: 10px;
+      }
 
-  .totals {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    font-size: 14px;
-  }
+      .btn-save,
+      .btn-print {
+        width: 100%;
+        flex: none;
+      }
 
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
+      .totals {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 14px;
+      }
 
-  #tabelaItens thead {
-    display: none;
-  }
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
 
-  #tabelaItens tbody tr {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 12px;
-    padding: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  }
+      #tabelaItens thead {
+        display: none;
+      }
 
-  #tabelaItens tbody td {
-    border: none;
-    padding: 7px 0;
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    white-space: normal;
-    text-align: right;
-  }
+      #tabelaItens tbody tr {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      }
 
-  #tabelaItens tbody td::before {
-    font-weight: 700;
-    color: #555;
-    text-align: left;
-  }
+      #tabelaItens tbody td {
+        border: none;
+        padding: 7px 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        white-space: normal;
+        text-align: right;
+      }
 
-  #tabelaItens tbody td:nth-child(1)::before { content: "Código"; }
-  #tabelaItens tbody td:nth-child(2)::before { content: "Descrição"; }
-  #tabelaItens tbody td:nth-child(3)::before { content: "NCM"; }
-  #tabelaItens tbody td:nth-child(4)::before { content: "CFOP"; }
-  #tabelaItens tbody td:nth-child(5)::before { content: "UN"; }
-  #tabelaItens tbody td:nth-child(6)::before { content: "Qtde"; }
-  #tabelaItens tbody td:nth-child(7)::before { content: "Vlr. Unit."; }
-  #tabelaItens tbody td:nth-child(8)::before { content: "Vlr. Total"; }
-  #tabelaItens tbody td:nth-child(9)::before { content: "Vlr. Venda"; }
-  #tabelaItens tbody td:nth-child(10)::before { content: "Ação"; }
+      #tabelaItens tbody td::before {
+        font-weight: 700;
+        color: #555;
+        text-align: left;
+      }
 
-  .empty-message {
-    display: block !important;
-    text-align: center !important;
-    padding: 18px !important;
-  }
+      #tabelaItens tbody td:nth-child(1)::before { content: "Código"; }
+      #tabelaItens tbody td:nth-child(2)::before { content: "Descrição"; }
+      #tabelaItens tbody td:nth-child(3)::before { content: "NCM"; }
+      #tabelaItens tbody td:nth-child(4)::before { content: "CFOP"; }
+      #tabelaItens tbody td:nth-child(5)::before { content: "UN"; }
+      #tabelaItens tbody td:nth-child(6)::before { content: "Qtde"; }
+      #tabelaItens tbody td:nth-child(7)::before { content: "Vlr. Unit."; }
+      #tabelaItens tbody td:nth-child(8)::before { content: "Vlr. Total"; }
+      #tabelaItens tbody td:nth-child(9)::before { content: "Vlr. Venda"; }
+      #tabelaItens tbody td:nth-child(10)::before { content: "Ação"; }
 
-  .btn-remove {
-    width: auto;
-    min-height: 34px;
-    padding: 8px 14px;
-  }
+      .empty-message {
+        display: block !important;
+        text-align: center !important;
+        padding: 18px !important;
+      }
 
-  .login-box {
-    width: calc(100% - 40px);
-    max-width: 360px;
-    padding: 28px 22px;
-  }
+      .btn-remove {
+        width: auto;
+        min-height: 34px;
+        padding: 8px 14px;
+      }
 
-  .login-box input {
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
+      .login-box {
+        width: calc(100% - 40px);
+        max-width: 360px;
+        padding: 28px 22px;
+      }
+
+      .login-box input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .sugestoes-produtos {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        max-height: 280px;
+        font-size: 15px;
+      }
+
+      .sugestao-produto {
+        padding: 13px 10px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
-<body>
 
+<body>
   <div id="telaLogin">
     <div class="login-box">
       <h2>Conferência de Estoque</h2>
@@ -280,20 +595,24 @@
             <label>Data de Entrada:</label>
             <input type="date" id="dataNota">
           </div>
+
           <div class="form-group">
             <label>Loja Destino:</label>
             <select id="selectLoja" onchange="preencherDadosLoja()">
               <option value="">A carregar lojas...</option>
             </select>
           </div>
+
           <div class="form-group">
             <label>CNPJ do Fornecedor:</label>
             <input type="text" id="fornecedorCNPJ" class="auto-filled" placeholder="Preenchimento automático" readonly>
           </div>
+
           <div class="form-group">
             <label>Nome do Fornecedor:</label>
             <input type="text" id="fornecedorNome" class="auto-filled" placeholder="Preenchimento automático" readonly>
           </div>
+
           <div class="form-group">
             <label>Chave de Acesso (NFe):</label>
             <input type="text" id="chaveNFe" placeholder="44 dígitos da nota fiscal">
@@ -303,50 +622,67 @@
 
       <div class="card" id="card-adicionar">
         <h3>2. Adicionar Produto</h3>
+
         <div class="grid-form" style="grid-template-columns: 1fr 2fr 1fr 1fr 1fr;">
           <div class="form-group">
             <label>Cód. Produto:</label>
             <input type="text" id="itemCodigo" placeholder="Ex: 5296" onblur="buscarPorCodigo()">
           </div>
+
           <div class="form-group">
             <label>Descrição do Produto:</label>
-            <input type="text" id="itemDescricao" list="listaDescricoes" placeholder="Aguarde o carregamento..." onchange="buscarPorDescricao()">
-            <datalist id="listaDescricoes"></datalist>
+            <input
+              type="text"
+              id="itemDescricao"
+              placeholder="Aguarde o carregamento..."
+              autocomplete="off"
+              oninput="mostrarSugestoesProdutos()"
+              onfocus="mostrarSugestoesProdutos()"
+            >
+            <div id="sugestoesProdutos" class="sugestoes-produtos"></div>
           </div>
+
           <div class="form-group">
             <label>NCM:</label>
             <input type="text" id="itemNCM" placeholder="NCM">
           </div>
+
           <div class="form-group">
             <label>CFOP:</label>
             <input type="text" id="itemCFOP" placeholder="CFOP">
           </div>
+
           <div class="form-group">
             <label>Unidade (UN):</label>
             <input type="text" id="itemUN" value="UN">
           </div>
         </div>
+
         <div class="grid-form" style="margin-top: 15px; grid-template-columns: 1fr 1fr 1fr auto;">
           <div class="form-group">
             <label>Quantidade:</label>
             <input type="number" id="itemQtde" value="1" min="1">
           </div>
+
           <div class="form-group">
             <label>Vlr. Unitário de Custo (R$):</label>
             <input type="number" id="itemValorUnitario" step="0.01" placeholder="0.00">
           </div>
+
           <div class="form-group">
             <label>Vlr. de Venda Final (R$):</label>
             <input type="number" id="itemValorVenda" step="0.01" placeholder="0.00">
           </div>
+
           <div class="form-group">
-            <button class="btn btn-add" onclick="adicionarItemNaLista()">Incluir Produto</button>
+            <button type="button" class="btn btn-add" onclick="adicionarItemNaLista()">Incluir Produto</button>
           </div>
         </div>
       </div>
 
       <div class="card">
         <h3>3. Produtos Inseridos</h3>
+
         <div style="overflow-x: auto;">
           <table id="tabelaItens">
             <thead>
@@ -368,27 +704,27 @@
             </tbody>
           </table>
         </div>
-        
+
         <div class="totals">
           <div>Qtd Itens: <span id="resumoQtd">0</span></div>
           <div>Total Custo (NFe): <span id="resumoTotalCusto">R$ 0,00</span></div>
         </div>
 
         <div class="action-group">
-          <button class="btn btn-save" id="btnSalvar" onclick="enviarParaPlanilha()">Salvar Dados na Planilha</button>
-          <button class="btn btn-print" onclick="window.print()">Imprimir PDF</button>
+          <button type="button" class="btn btn-save" id="btnSalvar" onclick="enviarParaPlanilha()">Salvar Dados na Planilha</button>
+          <button type="button" class="btn btn-print" onclick="window.print()">Imprimir PDF</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // URL da loja específica conectada conforme solicitado
     const URL_BANCO_SISLOJA_SALVAR = 'https://script.google.com/macros/s/AKfycbyt7EnnYa60CW4T200XHZacfHqDPHQ8OFHexSwMf14jR-W_eqDh-NMhaY_bCxaze2RLpA/exec';
-    
+
     let listaProdutos = [];
-    let vendedorLogado = ""; 
+    let vendedorLogado = "";
     let cacheProdutosBD = [];
+    let produtosFiltradosSugestao = [];
 
     window.onload = function() {
       document.getElementById('dataNota').valueAsDate = new Date();
@@ -426,13 +762,14 @@
           select.innerHTML = '<option value="">Nenhuma loja encontrada</option>';
         }
       })
-      .catch(error => {
+      .catch(() => {
         select.innerHTML = '<option value="">Erro ao carregar lojas</option>';
       });
     }
 
     function carregarListaProdutos() {
-      document.getElementById('itemDescricao').placeholder = "Sincronizando produtos...";
+      const campoDescricao = document.getElementById('itemDescricao');
+      campoDescricao.placeholder = "Sincronizando produtos...";
 
       fetch(URL_BANCO_SISLOJA_SALVAR, {
         method: 'POST',
@@ -442,52 +779,111 @@
       .then(retorno => {
         if (retorno.sucesso && Array.isArray(retorno.produtos)) {
           cacheProdutosBD = retorno.produtos;
-          const datalist = document.getElementById('listaDescricoes');
-          datalist.innerHTML = '';
-
-          cacheProdutosBD.forEach(prod => {
-            const option = document.createElement('option');
-            option.value = prod.descricao;
-            datalist.appendChild(option);
-          });
-          document.getElementById('itemDescricao').placeholder = "Clique para pesquisar ou digite";
+          campoDescricao.placeholder = cacheProdutosBD.length ? "Clique para pesquisar ou digite" : "Nenhum produto encontrado.";
         } else {
-          document.getElementById('itemDescricao').placeholder = "Nenhum produto encontrado.";
+          cacheProdutosBD = [];
+          campoDescricao.placeholder = "Nenhum produto encontrado.";
         }
       })
-      .catch(error => {
-        document.getElementById('itemDescricao').placeholder = "Falha ao sincronizar.";
+      .catch(() => {
+        cacheProdutosBD = [];
+        campoDescricao.placeholder = "Falha ao sincronizar.";
       });
     }
 
     function preencherCamposProduto(prod) {
-      document.getElementById('itemCodigo').value = prod.codigo;
-      document.getElementById('itemDescricao').value = prod.descricao;
-      document.getElementById('itemNCM').value = prod.ncm;
-      document.getElementById('itemCFOP').value = prod.cfop;
+      document.getElementById('itemCodigo').value = prod.codigo || '';
+      document.getElementById('itemDescricao').value = prod.descricao || prod.nome || '';
+      document.getElementById('itemNCM').value = prod.ncm || '';
+      document.getElementById('itemCFOP').value = prod.cfop || '';
       document.getElementById('itemUN').value = prod.un || "UN";
-      document.getElementById('itemValorVenda').value = prod.vlr_venda;
-      document.getElementById('itemValorUnitario').value = prod.vlr_unitario;
+      document.getElementById('itemValorVenda').value = prod.vlr_venda || 0;
+      document.getElementById('itemValorUnitario').value = prod.vlr_unitario || 0;
     }
+
+    function mostrarSugestoesProdutos() {
+      const campo = document.getElementById('itemDescricao');
+      const box = document.getElementById('sugestoesProdutos');
+      const termo = campo.value.trim().toLowerCase();
+
+      if (!cacheProdutosBD.length) {
+        box.style.display = 'none';
+        return;
+      }
+
+      const lista = cacheProdutosBD
+        .filter(prod => {
+          const texto = [
+            prod.codigo,
+            prod.descricao,
+            prod.nome,
+            prod.referencia,
+            prod.sku
+          ].join(' ').toLowerCase();
+
+          return !termo || texto.includes(termo);
+        })
+        .slice(0, 25);
+
+      produtosFiltradosSugestao = lista;
+
+      if (!lista.length) {
+        box.innerHTML = '<div class="sugestao-produto">Nenhum produto encontrado.</div>';
+        box.style.display = 'block';
+        return;
+      }
+
+      box.innerHTML = lista.map((prod, index) => `
+        <div class="sugestao-produto" onclick="selecionarProdutoSugestao(${index})">
+          <strong>${escaparHtmlProduto(prod.descricao || prod.nome || 'Produto sem descrição')}</strong>
+          <span>Cód: ${escaparHtmlProduto(prod.codigo || '-')} | Ref: ${escaparHtmlProduto(prod.referencia || '-')}</span>
+        </div>
+      `).join('');
+
+      box.style.display = 'block';
+    }
+
+    function selecionarProdutoSugestao(index) {
+      const produto = produtosFiltradosSugestao[index];
+      if (!produto) return;
+
+      preencherCamposProduto(produto);
+      document.getElementById('sugestoesProdutos').style.display = 'none';
+    }
+
+    function escaparHtmlProduto(valor) {
+      return String(valor || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    document.addEventListener('click', function(event) {
+      const campo = document.getElementById('itemDescricao');
+      const box = document.getElementById('sugestoesProdutos');
+
+      if (!campo || !box) return;
+
+      if (event.target !== campo && !box.contains(event.target)) {
+        box.style.display = 'none';
+      }
+    });
 
     function buscarPorCodigo() {
-      const codigoBuscado = document.getElementById('itemCodigo').value.trim();
+      const codigoBuscado = document.getElementById('itemCodigo').value.trim().toLowerCase();
       if (!codigoBuscado) return;
-      const produtoEncontrado = cacheProdutosBD.find(p => p.codigo === codigoBuscado);
-      if (produtoEncontrado) { preencherCamposProduto(produtoEncontrado); }
-    }
 
-    function buscarPorDescricao() {
-      const descBuscada = document.getElementById('itemDescricao').value.trim();
-      if (!descBuscada) return;
-      const produtoEncontrado = cacheProdutosBD.find(p => p.descricao === descBuscada);
-      if (produtoEncontrado) { preencherCamposProduto(produtoEncontrado); }
+      const produtoEncontrado = cacheProdutosBD.find(p => String(p.codigo || '').trim().toLowerCase() === codigoBuscado);
+      if (produtoEncontrado) preencherCamposProduto(produtoEncontrado);
     }
 
     function preencherDadosLoja() {
       const select = document.getElementById('selectLoja');
       const option = select.options[select.selectedIndex];
-      if(option && option.value !== "") {
+
+      if (option && option.value !== "") {
         document.getElementById('fornecedorCNPJ').value = option.getAttribute('data-cnpj') || "";
         document.getElementById('fornecedorNome').value = option.getAttribute('data-nome') || "";
       } else {
@@ -523,9 +919,11 @@
       .then(retorno => {
         if (retorno.status === 'sucesso') {
           vendedorLogado = retorno.nome || usuario;
+
           document.getElementById('nomeVendedorDisplay').innerText = vendedorLogado;
           document.getElementById('telaLogin').style.display = 'none';
           document.getElementById('telaSistema').style.display = 'block';
+
           carregarLojas();
           carregarListaProdutos();
         } else {
@@ -533,7 +931,7 @@
           msgLogin.style.color = "#dc3545";
         }
       })
-      .catch(error => {
+      .catch(() => {
         msgLogin.innerText = "Erro de conexão. Tente novamente.";
         msgLogin.style.color = "#dc3545";
       })
@@ -558,10 +956,19 @@
       }
 
       const vlrTotal = parseFloat((qtde * vlrUnitario).toFixed(2));
-      const novoItem = { Codigo_Prod: codigo, Descricao: descricao, NCM: ncm, CFOP: cfop, UN: un || "UN", Qtde: qtde, Vlr_Unitario: vlrUnitario, Vlr_Total: vlrTotal, Vlr_Venda: vlrVenda };
 
-      listaProdutos.push(novoItem);
-      
+      listaProdutos.push({
+        Codigo_Prod: codigo,
+        Descricao: descricao,
+        NCM: ncm,
+        CFOP: cfop,
+        UN: un || "UN",
+        Qtde: qtde,
+        Vlr_Unitario: vlrUnitario,
+        Vlr_Total: vlrTotal,
+        Vlr_Venda: vlrVenda
+      });
+
       document.getElementById('itemCodigo').value = '';
       document.getElementById('itemDescricao').value = '';
       document.getElementById('itemNCM').value = '';
@@ -570,6 +977,7 @@
       document.getElementById('itemQtde').value = '1';
       document.getElementById('itemValorUnitario').value = '';
       document.getElementById('itemValorVenda').value = '';
+      document.getElementById('sugestoesProdutos').style.display = 'none';
       document.getElementById('itemCodigo').focus();
 
       atualizarTabelaHtml();
@@ -582,7 +990,7 @@
 
     function atualizarTabelaHtml() {
       const tbody = document.querySelector('#tabelaItens tbody');
-      tbody.innerHTML = ''; 
+      tbody.innerHTML = '';
 
       if (listaProdutos.length === 0) {
         tbody.innerHTML = '<tr><td colspan="10" class="empty-message">Nenhum produto adicionado ainda.</td></tr>';
@@ -592,26 +1000,29 @@
       }
 
       let somaTotalCusto = 0;
+
       listaProdutos.forEach((item, index) => {
         somaTotalCusto += item.Vlr_Total;
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${item.Codigo_Prod}</td>
-          <td>${item.Descricao}</td>
-          <td>${item.NCM}</td>
-          <td>${item.CFOP}</td>
-          <td class="text-center">${item.UN}</td>
+          <td>${escaparHtmlProduto(item.Codigo_Prod)}</td>
+          <td>${escaparHtmlProduto(item.Descricao)}</td>
+          <td>${escaparHtmlProduto(item.NCM)}</td>
+          <td>${escaparHtmlProduto(item.CFOP)}</td>
+          <td class="text-center">${escaparHtmlProduto(item.UN)}</td>
           <td class="text-center">${item.Qtde}</td>
           <td class="text-right">R$ ${item.Vlr_Unitario.toFixed(2)}</td>
           <td class="text-right" style="font-weight:bold;">R$ ${item.Vlr_Total.toFixed(2)}</td>
           <td class="text-right">R$ ${item.Vlr_Venda.toFixed(2)}</td>
-          <td class="text-center col-acao"><button class="btn btn-remove" onclick="removerItem(${index})">Excluir</button></td>
+          <td class="text-center col-acao"><button type="button" class="btn btn-remove" onclick="removerItem(${index})">Excluir</button></td>
         `;
+
         tbody.appendChild(tr);
       });
 
       document.getElementById('resumoQtd').innerText = listaProdutos.length;
-      document.getElementById('resumoTotalCusto').innerText = "R$ " + somaTotalCusto.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+      document.getElementById('resumoTotalCusto').innerText = "R$ " + somaTotalCusto.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
     }
 
     function enviarParaPlanilha() {
@@ -626,7 +1037,7 @@
       const fornNome = document.getElementById('fornecedorNome').value.trim();
       const chaveNfe = document.getElementById('chaveNFe').value.trim();
 
-      if(!lojaSelecionada) {
+      if (!lojaSelecionada) {
         alert("O campo 'Loja Destino' é obrigatório.");
         return;
       }
@@ -635,32 +1046,34 @@
       btnSalvar.innerText = "Salvando... Aguarde";
       btnSalvar.disabled = true;
 
-      const registrosParaPlanilha = listaProdutos.map(item => {
-        return {
-          Data_Entrada: dataDigitada,
-          Loja_Destino: lojaSelecionada,
-          Fornecedor_CNPJ: fornCNPJ,
-          Fornecedor_Nome: fornNome,
-          Chave_NFe: chaveNfe,
-          Codigo_Prod: item.Codigo_Prod,
-          Descricao: item.Descricao,
-          NCM: item.NCM,
-          CFOP: item.CFOP,
-          UN: item.UN,
-          Qtde: item.Qtde,
-          Vlr_Unitario: item.Vlr_Unitario,
-          Vlr_Total: item.Vlr_Total,
-          Vlr_Venda: item.Vlr_Venda,
-          Conferente: vendedorLogado
-        };
-      });
+      const registrosParaPlanilha = listaProdutos.map(item => ({
+        Data_Entrada: dataDigitada,
+        Loja_Destino: lojaSelecionada,
+        Fornecedor_CNPJ: fornCNPJ,
+        Fornecedor_Nome: fornNome,
+        Chave_NFe: chaveNfe,
+        Codigo_Prod: item.Codigo_Prod,
+        Descricao: item.Descricao,
+        NCM: item.NCM,
+        CFOP: item.CFOP,
+        UN: item.UN,
+        Qtde: item.Qtde,
+        Vlr_Unitario: item.Vlr_Unitario,
+        Vlr_Total: item.Vlr_Total,
+        Vlr_Venda: item.Vlr_Venda,
+        Conferente: vendedorLogado
+      }));
 
-      const payload = { acao: 'salvar_dados_estoque', dados: registrosParaPlanilha };
-
-      fetch(URL_BANCO_SISLOJA_SALVAR, { method: 'POST', body: JSON.stringify(payload) })
+      fetch(URL_BANCO_SISLOJA_SALVAR, {
+        method: 'POST',
+        body: JSON.stringify({
+          acao: 'salvar_dados_estoque',
+          dados: registrosParaPlanilha
+        })
+      })
       .then(response => response.json())
       .then(retorno => {
-        if(retorno.sucesso) {
+        if (retorno.sucesso) {
           alert("Todos os dados foram salvos na planilha com sucesso!");
           listaProdutos = [];
           document.getElementById('chaveNFe').value = '';
@@ -669,7 +1082,9 @@
           alert("Aviso do servidor: " + retorno.mensagem);
         }
       })
-      .catch(error => { alert("Erro de comunicação ao salvar."); })
+      .catch(() => {
+        alert("Erro de comunicação ao salvar.");
+      })
       .finally(() => {
         btnSalvar.innerText = "Salvar Dados na Planilha";
         btnSalvar.disabled = false;
